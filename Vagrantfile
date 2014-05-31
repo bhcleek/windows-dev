@@ -10,6 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.winrm.username = "bhcleek"
 	config.winrm.password = "vagrant"
 
+	config.windows.set_work_network = true
+	config.vm.network "forwarded_port", host: 3389, guest: 3389, auto_correct: true
+
 	config.vm.provider "virtualbox" do |vb|
 		# Don't boot with headless mode
 		vb.gui = true
