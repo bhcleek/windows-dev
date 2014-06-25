@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	username = "bhcleek"
 
 	config.vm.box = "windows-dev"
-	config.vm.communicator = "winrm"
+	config.vm.communicator = :winrm
 	config.winrm.username = username
 	config.winrm.password = "vagrant"
 
