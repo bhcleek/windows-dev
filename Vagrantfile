@@ -6,12 +6,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-	username = "bhcleek"
-
+	username = "vagrant"
 	config.vm.box = "windows-dev"
-	config.vm.communicator = :winrm
-	config.winrm.username = username
-	config.winrm.password = "vagrant"
+	config.vm.communicator = "winrm"
 
 	config.windows.set_work_network = true
 	#config.vm.network "forwarded_port", host: 3389, guest: 3389, auto_correct: true
@@ -23,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		# Use VBoxManage to customize the VM. For example to change memory:
 		vb.customize ["modifyvm", :id, "--memory", "4096"]
 		vb.customize ["modifyvm", :id, "--cpus", "2"]
-		vb.customize ["storageattach", :id, "--storagectl", "SATA", "--port", "0", "--nonrotational", "on"]
+		vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--nonrotational", "on"]
 	end
 
 	config.vm.provision :file, :source => "~/.gitconfig", :destination => ".gitconfig"
