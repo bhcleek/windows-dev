@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.communicator = "winrm"
 
 	config.windows.set_work_network = true
+	config.vm.network "private_network", ip: "192.168.7.2"
 
 	config.vm.provider "virtualbox" do |vb|
 		# Don't boot with headless mode
