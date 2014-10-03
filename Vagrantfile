@@ -11,8 +11,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.communicator = "winrm"
 
 	config.windows.set_work_network = true
-	#config.vm.network "forwarded_port", host: 3389, guest: 3389, auto_correct: true
-	config.vm.network "forwarded_port", host: 1433, guest: 1433, auto_correct: true
 
 	config.vm.provider "virtualbox" do |vb|
 		# Don't boot with headless mode
@@ -25,15 +23,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	config.vm.provision :file, :source => "~/.gitconfig", :destination => ".gitconfig"
 	config.vm.provision :file, :source => "~/.gitignore", :destination => ".gitignore"
-	config.vm.provision :file, :source => "~/.vimrc", :destination => "_vimrc"
 	config.vm.provision :file, :source => "~/.ssh/id_rsa", :destination => ".ssh/id_rsa"
 	config.vm.provision :file, :source => "~/.ssh/id_rsa.pub", :destination => ".ssh/id_rsa.pub"
+	config.vm.provision :file, :source => "~/.vimrc", :destination => "_vimrc"
 
-	config.vm.synced_folder "~/.vim", "/Users/#{username}/vimfiles"
+	config.vm.synced_folder "~/.vim", "/Users/#{username}/vimfiles", create: true
 	config.vm.synced_folder "Documents/WindowsPowerShell", "/Users/#{username}/Documents/WindowsPowerShell", create: true
 
 	script = <<-SCRIPT
 		git config --global core.eol crlf
+		write-host "Thumbs.db" >> .gitignore
 	SCRIPT
 	config.vm.provision :shell, inline: script
 end
