@@ -1,0 +1,9 @@
+---
+- hosts: default
+  tasks:
+    - copy: src=/Users/bhcleek/.gitconfig dest=/Users/{{ username }}/.gitconfig
+    - copy: src=~/.ssh/id_ra dest=/Users/{{ username }}/.ssh/id_rsa
+    - copy: src=~/.ssh/id_ra.pub dest=/Users/{{ username }}/.ssh/id_rsa.pub
+    - copy: src=~/.vimrc dest=/Users/{{ username }}/_vimrc
+    - copy: src=~/.vim dest=/Users/{{ username }}/vimfiles
+    - copy: src= Documents/WindowsPowerShell/ dest=/Users/{{ username }}/Documents/WindowsPowerShell
