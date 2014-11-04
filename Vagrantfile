@@ -34,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	script = <<-SCRIPT
 		git config --global core.eol crlf
 		write-host "Thumbs.db" >> .gitignore
+		netsh http add urlacl url=http://+:51247/ user=everyone
 	SCRIPT
 	config.vm.provision :shell, inline: script
 end
