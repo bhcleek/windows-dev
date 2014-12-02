@@ -22,14 +22,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--nonrotational", "on"]
 	end
 
-	config.vm.provision :file, :source => "~/.gitconfig", :destination => ".gitconfig"
-	config.vm.provision :file, :source => "~/.gitignore", :destination => ".gitignore"
-	config.vm.provision :file, :source => "~/.ssh/id_rsa", :destination => ".ssh/id_rsa"
-	config.vm.provision :file, :source => "~/.ssh/id_rsa.pub", :destination => ".ssh/id_rsa.pub"
-	config.vm.provision :file, :source => "~/.vimrc", :destination => "_vimrc"
+	config.vm.provision :file, :source => "Documents/ConfigureRemotingForAnsible.ps1", :destination => "Documents/ConfigureRemotingForAnsible.ps1"
+	# todo: run ConfigureRemotingForAnsible.ps1
 
-	config.vm.synced_folder "~/.vim", "/Users/#{username}/vimfiles", create: true
-	config.vm.synced_folder "Documents/WindowsPowerShell", "/Users/#{username}/Documents/WindowsPowerShell", create: true
+	config.vm.provision "ansible" do |ansible|
+			ansible.inventory_path = "inventory"
+			ansible.extra_vars = {
+				username: "#{username}",
+				ansible_ssh_username: "${username}",
+				ansible_ssh_password: "vagrant"
+			}
+			ansible.verbose = "v"
+			ansible.playbook = "playbooks/win-developer.yml"
+	end
 
 	script = <<-SCRIPT
 		git config --global core.eol crlf
