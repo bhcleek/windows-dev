@@ -23,6 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	end
 
 	config.vm.provision :file, :source => "Documents/ConfigureRemotingForAnsible.ps1", :destination => "Documents/ConfigureRemotingForAnsible.ps1"
+	# todo: run ConfigureRemotingForAnsible.ps1
 
 	config.vm.provision "ansible" do |ansible|
 			ansible.inventory_path = "inventory"
@@ -31,7 +32,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				ansible_ssh_username: "${username}",
 				ansible_ssh_password: "vagrant"
 			}
-			ansible.playbook = "playbook.yml"
+			ansible.verbose = "v"
+			ansible.playbook = "playbooks/win-developer.yml"
 	end
 
 	script = <<-SCRIPT
