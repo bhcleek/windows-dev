@@ -14,12 +14,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.network "private_network", ip: "192.168.7.2"
 
 	config.vm.provider "virtualbox" do |vb|
+		vb.name = "windows-dev"
+
 		# Don't boot with headless mode
 		vb.gui = true
 		# Use VBoxManage to customize the VM. For example to change memory:
 		vb.customize ["modifyvm", :id, "--memory", "4096"]
 		vb.customize ["modifyvm", :id, "--cpus", "2"]
 		vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--nonrotational", "on"]
+
+		tcp_offloading = <<-'OFFLOADING'
+			Disable-NetAdapterChecksumOffload -Name 'Ethernet*' -IpIPv4 -TcpIPv4 -UdpIPv4 -NoRestart -Verbose
+			Disable-NetAdapterLso -Name 'Ethernet*' -IPv4 -NoRestart -Verbose
+		OFFLOADING
+
+		config.vm.provision :shell, :inline => tcp_offloading
 	end
 
 	config.vm.provision :file, :source => "Documents/ConfigureRemotingForAnsible.ps1", :destination => "Documents/ConfigureRemotingForAnsible.ps1"
