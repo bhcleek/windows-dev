@@ -1,8 +1,8 @@
 ---
 - hosts: default
   tasks:
-    - win_copy: src=/Users/bhcleek/.gitconfig dest=/Users/{{ username }}/.gitconfig
-    - win_copy: src=/Users/bhcleek/.gitignore dest=/Users/{{ username }}/.gitignore
+    - win_copy: src=/Users/bhcleek/.config/git/config dest=/Users/{{ username }}/.gitconfig
+    - win_copy: src=/Users/bhcleek/.config/git/ignore dest=/Users/{{ username }}/.gitignore
     - win_copy: src=~/.ssh/id_rsa dest=/Users/{{ username }}/.ssh/id_rsa
     - win_copy: src=~/.ssh/id_rsa.pub dest=/Users/{{ username }}/.ssh/id_rsa.pub
       #- win_copy: src=~/.config/vim/vimrc dest=/Users/{{ username }}/_vimrc
