@@ -7,4 +7,5 @@
     - win_copy: src=~/.ssh/id_rsa.pub dest=/Users/{{ username }}/.ssh/id_rsa.pub
       #- win_copy: src=~/.config/vim/vimrc dest=/Users/{{ username }}/_vimrc
     - win_copy: src=~/.config/vim/ dest=/Users/{{ username }}/vimfiles/
+      #- win_copy: src=vim/ dest=/Users/{{ username }}/vimfiles/
     - win_copy: src=Documents/WindowsPowerShell/ dest=/Users/{{ username }}/Documents/WindowsPowerShell/

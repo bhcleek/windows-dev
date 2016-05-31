@@ -38,8 +38,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			ansible.inventory_path = "inventory"
 			ansible.extra_vars = {
 				username: "#{username}",
-				ansible_ssh_username: "${username}",
-				ansible_ssh_password: "vagrant"
+				ansible_user: "${username}",
+				ansible_password: "vagrant"
 			}
 			ansible.verbose = "v"
 			ansible.playbook = "playbooks/win-developer.yml"
@@ -48,6 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	script = <<-SCRIPT
 		git config --global core.eol crlf
 		git config --global --unset web.browser
+		git config --global core.excludesfile  "C:/Users/#{username}"/.gitignore"
 		write-host "Thumbs.db" >> .gitignore
 	SCRIPT
 	config.vm.provision :shell, inline: script
